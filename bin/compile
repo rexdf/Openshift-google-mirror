@@ -13,7 +13,7 @@ pcre_ver=${PCRE_VERSION:-8.33}
 pcre_file=${PCRE_FILE:-pcre-$pcre_ver.tar.gz}
 pcre_url=${PCRE_URL:-http://sourceforge.net/projects/pcre/files/pcre/$pcre_ver/$pcre_file}
 
-nginx_ver=${NGINX_VERSION:-1.4.4}
+nginx_ver=${NGINX_VERSION:-1.9.6}
 nginx_file=${NGINX_FILE:-nginx-$nginx_ver.tar.gz}
 nginx_url=${NGINX_URL:-http://nginx.org/download/$nginx_file}
 
@@ -46,9 +46,15 @@ else
     echo " done"
 fi
 
+echo "Download nginx depes"
+cd $src_dir
+git clone https://github.com/cuber/ngx_http_google_filter_module
+git clone https://github.com/yaoweibin/ngx_http_substitutions_filter_module
+echo " done"
 
 cd $src_dir/nginx-$nginx_ver/
-./configure --with-pcre=$src_dir/pcre-$pcre_ver/ --with-http_ssl_module
+./configure --with-pcre=$src_dir/pcre-$pcre_ver/ --with-http_ssl_module --add-module=$src_dir/ngx_http_google_filter_module \
+--add-module=$src_dir/ngx_http_substitutions_filter_module
 make
 cp -f objs/nginx $bin_dir
 make clean
