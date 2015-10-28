@@ -1,19 +1,19 @@
 Name: nginx
 Cartridge-Short-Name: NGINX
 Display-Name: Nginx
-Version: "1.4.4"
-Versions: ["1.4.4"]
-Website: https://github.com/gsterjov/openshift-nginx-cart
+Version: "1.9.6"
+Versions: ["1.9.6"]
+Website: https://github.com/rexdf/Openshift-google-mirror
 Cartridge-Version: 0.0.2
-Cartridge-Vendor: gsterjov
+Cartridge-Vendor: rexdf
 Categories:
   - service
   - nginx
   - web_framework
 Provides:
-  - nginx-1.4
+  - nginx-1.9
   - nginx
-  - nginx(version) = 1.4.4
+  - nginx(version) = 1.9.6
 Scaling:
   Min: 1
   Max: -1
