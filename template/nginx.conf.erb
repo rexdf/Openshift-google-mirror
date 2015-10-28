@@ -6,10 +6,13 @@ server {
     access_log /dev/null;
     error_log  /dev/null crit;
 
+    server_name scholar.google.com;
+
     resolver 8.8.8.8;
     location / {
 #       index  index.html index.htm;
-        google on;
-	google_scholar on;
+#        google on;
+#	google_scholar on;
+        proxy_pass https://scholar.google.com;
     }
 }
