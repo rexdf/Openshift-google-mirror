@@ -1,8 +1,15 @@
 server {
     listen  <%= ENV['OPENSHIFT_NGINX_IP'] %>:<%= ENV['OPENSHIFT_NGINX_PORT'] %>;
-    root    <%= ENV['OPENSHIFT_REPO_DIR'] %>public;
+#    root    <%= ENV['OPENSHIFT_REPO_DIR'] %>public;
 
+    # Disable all logging
+    access_log /dev/null;
+    error_log  /dev/null crit;
+
+    resolver 8.8.8.8;
     location / {
-        index  index.html index.htm;
+#       index  index.html index.htm;
+        google on;
+	google_scholar on;
     }
 }
