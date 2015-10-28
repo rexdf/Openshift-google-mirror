@@ -37,7 +37,7 @@ Subscribes:
     Required: false
 Group-Overrides:
   - components:
-    - nginx-1.4
+    - nginx-1.9
     - web_proxy
 Endpoints:
   - Private-IP-Name:   IP
