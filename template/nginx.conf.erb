@@ -8,11 +8,24 @@ server {
 
 #    server_name scholar.google.com;
 
-    resolver 8.8.8.8;
+#    resolver 8.8.8.8;
     location / {
+        set $scholar_host "scholar.google.com";
+        set $upstream "";
+        rewrite_by_lua '    
+
+            os.execute("perl /var/lib/openshift/<%= ENV['OPENSHIFT_APP_UUID'] %>/nginx/usr/versions/0.0.1/Perl-DNS-Resolver/get_host_ip.pl " .. ngx.var.scholar_host .. " > /tmp/ip.out")
+            io.input("/tmp/ip.out")
+            local route = io.read("*line")
+
+            ngx.log(ngx.ALERT, route)
+            ngx.var.upstream = route
+            route[ngx.var.http_host] = route
+
+        ';
 #       index  index.html index.htm;
 #        google on;
 #	google_scholar on;
-        proxy_pass https://scholar.google.com;
+        proxy_pass https://$scholar_host;
     }
 }

@@ -50,11 +50,13 @@ echo "Download nginx depes"
 cd $src_dir
 git clone https://github.com/cuber/ngx_http_google_filter_module
 git clone https://github.com/yaoweibin/ngx_http_substitutions_filter_module
+git clone https://github.com/openresty/lua-nginx-module.git
 echo " done"
 
 cd $src_dir/nginx-$nginx_ver/
 ./configure --with-pcre=$src_dir/pcre-$pcre_ver/ --with-http_ssl_module --add-module=$src_dir/ngx_http_google_filter_module \
---add-module=$src_dir/ngx_http_substitutions_filter_module
+--add-module=$src_dir/ngx_http_substitutions_filter_module \
+--add-module=$src_dir/lua-nginx-module
 make
 cp -f objs/nginx $bin_dir
 make clean

@@ -27,6 +27,8 @@ http {
     sendfile  on;
     gzip      on;
 
+    server_tokens off;
+
     keepalive_timeout  65;
 
     include  <%= ENV['OPENSHIFT_REPO_DIR'] %>nginx.conf;
