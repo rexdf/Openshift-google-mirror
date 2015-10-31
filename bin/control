@@ -18,7 +18,7 @@ function start() {
         fi
 
         # nginx will always use the prefix defined at compile time unless an absolute path to the conf file is given
-        nohup "$NGINX_EXEC" -c "$NGINX_CONFIG_FILE" 2>&1
+        nohup "$NGINX_EXEC" -p "$OPENSHIFT_NGINX_DIR" -c "$NGINX_CONFIG_FILE" 2>&1
         [ "$?" == "0" ] && wait_for_pid_file $NGINX_PID_FILE
 
     else
@@ -32,7 +32,7 @@ function stop() {
 
     if [ -f "$NGINX_PID_FILE" ]; then
         pid=`cat "$NGINX_PID_FILE" 2> /dev/null`
-        eval "'$NGINX_EXEC' -c '$NGINX_CONFIG_FILE' -s stop"
+        eval "'$NGINX_EXEC' -p '$OPENSHIFT_NGINX_DIR' -c '$NGINX_CONFIG_FILE' -s stop"
         wait_for_stop $pid
     fi
 }
@@ -65,7 +65,7 @@ function reload() {
     if [ -f "$NGINX_PID_FILE" ]
     then
         pid=`cat "$NGINX_PID_FILE" 2> /dev/null`
-        output=$("$NGINX_EXEC" -c "$NGINX_CONFIG_FILE" -s reload)
+        output=$("$NGINX_EXEC" -p "$OPENSHIFT_NGINX_DIR" -c "$NGINX_CONFIG_FILE" -s reload)
         client_result "$output"
     else
         client_result "Cannot reload Nginx as it is not running"
