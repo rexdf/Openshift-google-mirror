@@ -9,11 +9,11 @@ bin_dir=$(cd "$1/out" && pwd)
 src_dir=$(cd "$1/src" && pwd)
 buildpack=$(dirname $(dirname $0))
 
-pcre_ver=${PCRE_VERSION:-8.33}
+pcre_ver=${PCRE_VERSION:-8.36}
 pcre_file=${PCRE_FILE:-pcre-$pcre_ver.tar.gz}
 pcre_url=${PCRE_URL:-http://sourceforge.net/projects/pcre/files/pcre/$pcre_ver/$pcre_file}
 
-nginx_ver=${NGINX_VERSION:-1.4.4}
+nginx_ver=${NGINX_VERSION:-1.9.6}
 nginx_file=${NGINX_FILE:-nginx-$nginx_ver.tar.gz}
 nginx_url=${NGINX_URL:-http://nginx.org/download/$nginx_file}
 
@@ -55,7 +55,17 @@ git clone https://github.com/simpl/ngx_devel_kit.git
 echo " done"
 
 cd $src_dir/nginx-$nginx_ver/
-./configure --with-pcre=$src_dir/pcre-$pcre_ver/ --with-http_ssl_module --add-module=$src_dir/ngx_http_google_filter_module \
+
+# export LUA_LIB=/usr/lib64
+# export LUA_INC=/usr/include
+
+./configure --with-pcre=$src_dir/pcre-$pcre_ver/ --with-http_ssl_module \
+--with-http_ssl_module --with-http_realip_module --with-http_addition_module \
+--with-http_sub_module --with-http_flv_module --with-http_mp4_module \
+--with-http_spdy_module --with-http_gunzip_module --with-http_gzip_static_module \
+--with-http_random_index_module --with-http_secure_link_module \
+--with-http_stub_status_module --with-ipv6 --with-pcre-jit \
+--add-module=$src_dir/ngx_http_google_filter_module \
 --add-module=$src_dir/ngx_http_substitutions_filter_module \
 --add-module=$src_dir/ngx_devel_kit \
 --add-module=$src_dir/lua-nginx-module
