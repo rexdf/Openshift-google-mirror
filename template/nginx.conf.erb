@@ -48,7 +48,7 @@ server {
 #       index  index.html index.htm;
 #        google on;
 #	google_scholar on;
-        roxy_buffering             off;
+        proxy_buffering             off;
         proxy_set_header            Host $upstream_host;
 #        proxy_set_header            X-Forwarded-For $proxy_add_x_forwarded_for;
         proxy_redirect              off;
